@@ -1,0 +1,18 @@
+package com.jonathanj00.url_shortener.dto;
+
+
+public class ShortenResponse {
+    private String alias;
+
+    public ShortenResponse(String shortUrl) {
+        this.alias = shortUrl;
+    }
+
+    public String getShortUrl() {
+        return alias;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.alias = shortUrl;
+    }
+}

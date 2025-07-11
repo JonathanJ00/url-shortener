@@ -34,12 +34,12 @@ tasks.named('test') {
 
 tasks.register('buildDockerImage', Exec) {
 	dependsOn build
-	commandLine 'docker', 'build', '-t', 'app', '.'
+	commandLine 'docker', 'build', '--no-cache', '-t', 'app', '.'
 }
 
 tasks.register("buildDockerAndRun", Exec) {
     dependsOn buildDockerImage
-    commandLine "docker", "run", "-d", "-p", "8080:8080",
+    commandLine "docker", "run", "-p", "8080:8080",
             "-v", "${projectDir}/h2-data:/data/h2",
             "-e", "H2_FILE_PATH=/data/h2/mydb",
             "app"
