@@ -84,4 +84,45 @@ public class UrlShortenerService {
 
         return alias;
     }
+
+    /**
+     * Finds saved URL based on provided alias
+     *
+     * @param alias
+     * @return URL if present, otherwise null
+     */
+    public String getFullUrl(String alias) {
+        alias = alias.toLowerCase();
+        List<Url> responses = urlRepository.findByAlias(alias);
+
+        if (responses.isEmpty()) {
+            return null;
+        }
+
+        return responses.getFirst().getUrl();
+    }
+
+    /**
+     * Deletes a URL based on the provided alias. If alias is not present then throws IllegalArgumentException.
+     *
+     * @param alias
+     * @throws IllegalArgumentException
+     */
+    public void deleteUrl(String alias) throws IllegalArgumentException {
+        alias = alias.toLowerCase();
+        List<Url> responses = urlRepository.findByAlias(alias);
+
+        if (responses.isEmpty()) {
+            throw new IllegalArgumentException("Alias not found.");
+        }
+
+        urlRepository.delete(responses.getFirst());
+    }
+
+    /**
+     * @return List of all saved URL's
+     */
+    public List<Url> getAllUrls() {
+        return urlRepository.findAll();
+    }
 }

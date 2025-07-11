@@ -18,4 +18,6 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
 
     List<Url> findByUrl(String url);
 
+    List<Url> findByAlias(String alias);
+
 }

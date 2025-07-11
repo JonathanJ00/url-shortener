@@ -8,13 +8,13 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 public class UrlShortenerServiceTest {
@@ -89,5 +89,34 @@ public class UrlShortenerServiceTest {
         when(urlRepository.existsByAlias(alias)).thenReturn(true);
 
         assertThatThrownBy(() -> urlShortenerService.shortenUrlAliasProvided(url, alias)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testGetFullUrl_shouldReturnValidUrl() {
+        String url = "www.example.com";
+        String alias = "alias";
+        Url urlEntity = new Url(url, alias);
+
+        when(urlRepository.findByAlias(alias)).thenReturn(List.of(urlEntity));
+
+        assertEquals(url, urlShortenerService.getFullUrl(alias), "Incorrect full url");
+    }
+
+    @Test
+    public void testGetFullUrl_noAliasFound_shouldReturnNull() {
+        String alias = "alias";
+
+        when(urlRepository.findByAlias(alias)).thenReturn(new ArrayList<>());
+
+        assertNull(urlShortenerService.getFullUrl(alias), "Expected response of null");
+    }
+
+    @Test
+    public void testDeleteUrl_aliasNotPresent_shouldThrowException() {
+        String alias = "alias";
+
+        when(urlRepository.findByAlias(alias)).thenReturn(new ArrayList<>());
+
+        assertThatThrownBy(() -> urlShortenerService.deleteUrl(alias)).isInstanceOf(IllegalArgumentException.class);
     }
 }
