@@ -32,7 +32,7 @@ public class UrlShortenerController {
             String alias = urlShortenerService.shortenUrl(request.getFullUrl(), request.getCustomAlias());
             return ResponseEntity.status(HttpStatus.CREATED).body(new ShortenResponse(getBaseUrl(httpRequest) + alias));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -55,7 +55,7 @@ public class UrlShortenerController {
         try {
             urlShortenerService.deleteUrl(alias);
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Alias not found");
         }
     }
 
