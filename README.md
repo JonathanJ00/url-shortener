@@ -37,6 +37,3 @@ It should:
   - How to build and run locally.
   - Example usage (UI and/or API).
   - Any notes or assumptions.
-
-## Assumptions
-- Only one alias should be saved for each URL
