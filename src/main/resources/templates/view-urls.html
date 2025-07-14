@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>All URLs</title>
+  <script>
+    console.log("Script loaded.");
+
+    window.addEventListener('load', function() {
+      document.getElementById('urlForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const fullUrl = document.getElementById('url').value;
+        const customAlias = document.getElementById('alias').value;
+
+        console.log("Submitting:", fullUrl, customAlias);
+
+        const response = await fetch('/shorten', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({fullUrl, customAlias})
+        });
+
+        if (response.ok) {
+          alert('URL submitted successfully!');
+        } else {
+          alert('Failed to submit URL.');
+        }
+      });
+    })
+
+    async function refreshUrls() {
+      const response = await fetch('/urls');
+      const urls = await response.json();
+
+      const tableBody = document.getElementById('urlsTableBody');
+      tableBody.innerHTML = '';
+
+      urls.forEach(url => {
+        const row = `<tr>
+                    <td>${url.alias}</td>
+                    <td>${url.fullUrl}</td>
+                    <td>${url.shortUrl}</td>
+                </tr>`;
+        tableBody.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    window.addEventListener(load, refreshUrls)
+  </script>
+</head>
+<body>
+<h1>Shorten URL</h1>
+<form id="urlForm">
+  <input type="text" id="url" name="url" placeholder="URL to be shortened" required />
+  <input type="text" id="alias" name="alias" placeholder="Custom alias (optional)" />
+  <button type="submit">Shorten URL</button>
+</form>
+<h1>All URLs</h1>
+<button onclick="refreshUrls()">Refresh List</button>
+<table>
+  <thead>
+  <tr>
+    <th>Alias</th>
+    <th>URL</th>
+    <th>Full Link</th>
+  </tr>
+  </thead>
+  <tbody id="urlsTableBody">
+  <!-- Rows will be dynamically inserted here -->
+  </tbody>
+</table>
+</body>
+</html>

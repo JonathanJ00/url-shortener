@@ -20,6 +20,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'com.h2database:h2:2.3.232'
 	implementation "org.apache.commons:commons-lang3:3.18.0"
 
@@ -39,7 +40,7 @@ tasks.register('buildDockerImage', Exec) {
 
 tasks.register("buildDockerAndRun", Exec) {
     dependsOn buildDockerImage
-    commandLine "docker", "run", "-p", "8080:8080",
+    commandLine "docker", "run", "-d","-p", "8080:8080",
             "-v", "${projectDir}/h2-data:/data/h2",
             "-e", "H2_FILE_PATH=/data/h2/mydb",
             "app"

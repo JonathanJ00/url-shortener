@@ -38,7 +38,6 @@ public class UrlShortenerServiceTest {
         when(urlRepository.existsByUrl(url)).thenReturn(false);
         when(urlRepository.save(ArgumentMatchers.any())).thenReturn(urlEntity);
 
-
         String alias = urlShortenerService.shortenNewAlias(url);
         assertEquals(6, alias.length(), "Incorrect alias length");
     }
@@ -68,6 +67,32 @@ public class UrlShortenerServiceTest {
 
         String returnAlias = urlShortenerService.shortenUrl(url, alias);
         assertEquals(alias, returnAlias, "Should return existing alias");
+    }
+
+    @Test
+    public void testShortenAliasIsEmptyString_shouldGenerateAlias() {
+        String url = "www.example.com";
+        String alias = "";
+        Url urlEntity = new Url(url, alias);
+
+        when(urlRepository.existsByUrl(url)).thenReturn(false);
+        when(urlRepository.save(ArgumentMatchers.any())).thenReturn(urlEntity);
+
+        String returnedAlias = urlShortenerService.shortenUrl(url, alias);
+        assertEquals(6, returnedAlias.length(), "Incorrect alias length");
+    }
+
+    @Test
+    public void testShortenAliasIsNull_shouldGenerateAlias() {
+        String url = "www.example.com";
+        String alias = null;
+        Url urlEntity = new Url(url, alias);
+
+        when(urlRepository.existsByUrl(url)).thenReturn(false);
+        when(urlRepository.save(ArgumentMatchers.any())).thenReturn(urlEntity);
+
+        String returnedAlias = urlShortenerService.shortenUrl(url, alias);
+        assertEquals(6, returnedAlias.length(), "Incorrect alias length");
     }
 
     @Test

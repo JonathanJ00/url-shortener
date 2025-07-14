@@ -24,7 +24,7 @@ public class UrlShortenerService {
      * @return
      */
     public String shortenUrl(String fullUrl, String customAlias) {
-        if (customAlias != null) {
+        if (customAlias != null && !customAlias.isEmpty()) {
             shortenUrlAliasProvided(fullUrl, customAlias);
             return customAlias;
         }
