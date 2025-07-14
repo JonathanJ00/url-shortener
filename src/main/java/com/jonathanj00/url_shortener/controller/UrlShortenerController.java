@@ -17,6 +17,10 @@ import java.util.stream.Collectors;
 
 import static com.jonathanj00.url_shortener.utility.RequestUtility.getBaseUrl;
 
+/**
+ * Controller defining RESTful interface for application.
+ * Please see openapi.yaml in projects root directory for API specification.
+ */
 @RestController
 public class UrlShortenerController {
 

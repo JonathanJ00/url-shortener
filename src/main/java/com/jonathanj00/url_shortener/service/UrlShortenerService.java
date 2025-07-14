@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class defining helper methods for controller layer.
+ */
 @Service
 public class UrlShortenerService {
 

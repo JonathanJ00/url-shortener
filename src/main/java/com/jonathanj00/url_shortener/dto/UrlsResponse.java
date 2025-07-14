@@ -1,5 +1,8 @@
 package com.jonathanj00.url_shortener.dto;
 
+/**
+ * DTO class defining response body containing details of a url entity.
+ */
 public class UrlsResponse {
     private String alias;
     private String fullUrl;

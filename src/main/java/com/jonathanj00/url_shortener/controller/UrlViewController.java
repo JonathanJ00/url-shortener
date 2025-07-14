@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Controller class used by Thymeleaf to define and load application user interface.
+ */
 @Controller
 public class UrlViewController {
 
@@ -26,6 +29,13 @@ public class UrlViewController {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Defines initial user interface to be displayed to the user.
+     *
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/view-urls")
     public String viewUrls(Model model, HttpServletRequest request) {
         String apiUrl = RequestUtility.getBaseUrl(request) + "/" + URLS;
