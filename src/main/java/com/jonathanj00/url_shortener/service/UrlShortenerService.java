@@ -27,6 +27,7 @@ public class UrlShortenerService {
      * @return
      */
     public String shortenUrl(String fullUrl, String customAlias) {
+
         if (customAlias != null && !customAlias.isEmpty()) {
             shortenUrlAliasProvided(fullUrl, customAlias);
             return customAlias;
@@ -78,10 +79,9 @@ public class UrlShortenerService {
     private String generateRandomAlias() {
         int stringLength = 6;
         String alias = RandomStringUtils.randomAlphanumeric(stringLength);
-        alias = alias.toLowerCase();
 
         while (urlRepository.existsByAlias(alias)) {
-            stringLength = +1;
+            stringLength += 1;
             alias = RandomStringUtils.randomAlphanumeric(stringLength);
         }
 
@@ -95,7 +95,6 @@ public class UrlShortenerService {
      * @return URL if present, otherwise null
      */
     public String getFullUrl(String alias) {
-        alias = alias.toLowerCase();
         List<Url> responses = urlRepository.findByAlias(alias);
 
         if (responses.isEmpty()) {
@@ -112,7 +111,6 @@ public class UrlShortenerService {
      * @throws IllegalArgumentException
      */
     public void deleteUrl(String alias) throws IllegalArgumentException {
-        alias = alias.toLowerCase();
         List<Url> responses = urlRepository.findByAlias(alias);
 
         if (responses.isEmpty()) {
