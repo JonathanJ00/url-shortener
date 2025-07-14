@@ -16,7 +16,7 @@
 
         console.log("Submitting:", fullUrl, customAlias);
 
-        const response = await fetch('/shorten', {
+        await fetch('/shorten', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -24,13 +24,17 @@
           body: JSON.stringify({fullUrl, customAlias})
         });
 
-        if (response.ok) {
-          alert('URL submitted successfully!');
-        } else {
-          alert('Failed to submit URL.');
-        }
+        location.reload();
       });
     })
+
+    async function deleteUrl(alias) {
+      await fetch(`/${alias}`, {
+        method: 'DELETE',
+      });
+
+      location.reload();
+    }
 
     async function refreshUrls() {
       const response = await fetch('/urls');
@@ -44,12 +48,13 @@
                     <td>${url.alias}</td>
                     <td>${url.fullUrl}</td>
                     <td>${url.shortUrl}</td>
+                    <td><button onclick="deleteUrl('${url.alias}')">Delete</button></td>
                 </tr>`;
         tableBody.insertAdjacentHTML('beforeend', row);
       });
     }
 
-    window.addEventListener(load, refreshUrls)
+    window.addEventListener('load', refreshUrls)
   </script>
 </head>
 <body>
