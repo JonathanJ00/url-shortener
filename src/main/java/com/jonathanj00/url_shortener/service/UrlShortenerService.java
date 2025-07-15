@@ -76,6 +76,13 @@ public class UrlShortenerService {
         return alias;
     }
 
+    /**
+     * Generates an alias as a random alphanumeric string.
+     * Initial length of string is 6 but if generated string matches one already existing then the length is increased
+     * to reduce delays caused by multiple random strings already existing in db.
+     *
+     * @return Alias as a string
+     */
     private String generateRandomAlias() {
         int stringLength = 6;
         String alias = RandomStringUtils.randomAlphanumeric(stringLength);
