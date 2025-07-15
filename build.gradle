@@ -23,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'com.h2database:h2:2.3.232'
 	implementation "org.apache.commons:commons-lang3:3.18.0"
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.2.Final'
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

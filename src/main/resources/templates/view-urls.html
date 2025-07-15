@@ -47,7 +47,7 @@
         const row = `<tr>
                     <td>${url.alias}</td>
                     <td>${url.fullUrl}</td>
-                    <td><a href="${url.shortUrl}">${url.shortUrl}</a></td>
+                    <td><a href="${url.shortUrl}" target="_blank">${url.shortUrl}</a></td>
                     <td><button onclick="deleteUrl('${url.alias}')">Delete</button></td>
                 </tr>`;
         tableBody.insertAdjacentHTML('beforeend', row);
